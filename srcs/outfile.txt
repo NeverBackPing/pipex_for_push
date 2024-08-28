@@ -1,0 +1,12 @@
+total 216
+-rwxrwxrwx 1 never never  3803 Aug 28 03:21 Makefile
+-rwxrwxrwx 1 never never 49008 Aug 28 05:02 a.out
+-rwxrwxrwx 1 never never  5792 Aug 28 03:32 get_next_line.a
+drwxrwxrwx 1 never never  4096 Aug 28 03:32 gnl
+drwxrwxrwx 1 never never  4096 Aug 27 17:09 includes
+drwxrwxrwx 1 never never  4096 Aug 28 03:32 libc
+-rwxrwxrwx 1 never never 84092 Aug 28 03:32 libft.a
+-rwxrwxrwx 1 never never 21602 Aug 28 03:32 libftprintf.a
+-rwxrwxrwx 1 never never 49008 Aug 28 03:32 pipex
+drwxrwxrwx 1 never never  4096 Aug 28 03:32 printf
+drwxrwxrwx 1 never never  4096 Aug 28 03:32 srcs
