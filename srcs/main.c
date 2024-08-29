@@ -5,16 +5,12 @@ int	fork_main(t_pipex *pipex, char **av, char **envp)
 	pipex->child = fork();
 	if (pipex->child < 0)
 		exit(10);
-	if (pipex->child == 0 && child_fork(pipex, av, envp))
+	if (pipex->child == 0)
 	{
 		if (child_fork(pipex, av, envp))
-		{
 			exit(pipex->out);
-		}
 		else
-		{
 			exit(pipex->out);
-		}
 	}
 	pipex->child2 = fork();
 	if (pipex->child2 < 0)
@@ -22,13 +18,9 @@ int	fork_main(t_pipex *pipex, char **av, char **envp)
 	if (pipex->child2 == 0)
 	{
 		if (child2_fork(pipex, av, envp))
-		{
 			exit(pipex->out);
-		}
 		else
-		{
 			exit(pipex->out);
-		}
 	}
 	return (0);
 }
