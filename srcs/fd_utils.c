@@ -98,6 +98,5 @@ if (access(pipex->infile, F_OK) == 0 && pipex->fd[0] > 0)
 	}
 	if (pipex->out == 5)
 		exit(pipex->out);
-	//free_file(pipex);
 	return (0);
 }

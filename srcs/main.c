@@ -8,9 +8,13 @@ int	fork_main(t_pipex *pipex, char **av, char **envp)
 	if (pipex->child == 0)
 	{
 		if (child_fork(pipex, av, envp))
+		{
 			exit(pipex->out);
+		}
 		else
+		{
 			exit(pipex->out);
+		}
 	}
 	pipex->child2 = fork();
 	if (pipex->child2 < 0)

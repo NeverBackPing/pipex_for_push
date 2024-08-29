@@ -1,1 +1,9 @@
--rwxrwxrwx 1 never never  3803 Aug 28 03:21 Makefile
+total 68$
+-rwxrwxrwx 1 never never  3803 Aug 28 03:21 Makefile$
+-rwxrwxrwx 1 never never 49072 Aug 29 17:23 a.out$
+drwxrwxrwx 1 never never  4096 Aug 28 12:04 gnl$
+drwxrwxrwx 1 never never  4096 Aug 28 12:04 includes$
+drwxrwxrwx 1 never never  4096 Aug 28 12:04 libc$
+drwxrwxrwx 1 never never  4096 Aug 28 12:04 printf$
+drwxrwxrwx 1 never never  4096 Aug 28 12:04 srcs$
+-rwxrwxrwx 1 never never 15968 Aug 29 15:28 test$
