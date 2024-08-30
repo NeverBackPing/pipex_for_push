@@ -59,8 +59,7 @@ int	child_fork(t_pipex *pipex, char **av, char **envp)
 		}
 		if (check_exit == 1 && pipex->check == 0)
 		{
-			/*if (pipex->cmd != NULL)
-				free(pipex->cmd);*/
+			
 		}
 		free_file(pipex);
 	}
@@ -108,10 +107,6 @@ int	child2_fork(t_pipex *pipex, char **av, char **envp)
 	{
 		if (manage_child2(pipex, av[3], envp))
 			check_exit = 1;
-		if (pipex->cmd != NULL)
-			free(pipex->cmd);
-		if (pipex->path_find != NULL)
-			free(pipex->path_find);
 		free_file(pipex);
 	}
 	if (check_exit == 1)
