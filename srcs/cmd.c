@@ -60,9 +60,9 @@ int	first_check_path(t_pipex *pipex)
 	if (access(pipex->path_find, F_OK) == 0)
 	{
 		if (access(pipex->path_find, X_OK) == 0)
-			return (0);
+			return (free(pipex->path_find), 0);
 		else
-			return (denied(pipex), 1);
+			return (denied(pipex), free(pipex->path_find), 1);
 	}
 	return (free(pipex->path_find), 0);
 }
@@ -104,10 +104,9 @@ int	check_path(t_pipex *pipex, char *av, char **envp)
 	pipex->cmd = ft_strdup(pipex->tmp[0]);
 	if (pipex->cmd == NULL)
 		return (clean_split(pipex->tmp), ouf_memory(pipex), 1);
-	//attention v v v v v v v v v v v v v v v v
 	if (((pipex->cmd[0] == '.') && (pipex->cmd[1] == '/'))
 			&& access(pipex->cmd, F_OK) != 0)
-		return (print_error(pipex), clean_split(pipex->tmp), 1);
+		return (print_error(pipex), clean_split(pipex->tmp), free(pipex->cmd), 1);
 	if (path_envp(envp, pipex))
 		return (error_path(pipex), clean_split(pipex->tmp), 1);
 	if (find_path(pipex))

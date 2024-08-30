@@ -53,14 +53,9 @@ int	child_fork(t_pipex *pipex, char **av, char **envp)
 		if (manage_child(pipex, av[2], envp))
 			check_exit = 1;
 		if (pipex->check == 1)
-		{
 			close_file(pipex);
-
-		}
 		if (check_exit == 1 && pipex->check == 0)
-		{
-			
-		}
+			NULL;
 		free_file(pipex);
 	}
 	if (check_exit == 1 && pipex->check == 0)
