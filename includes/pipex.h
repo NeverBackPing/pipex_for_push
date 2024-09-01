@@ -55,7 +55,6 @@ typedef struct s_pipex
 	char		**tmp;
 	char		**flag;
 	char		*directory;
-	//char 		*code;
 	int			out;
 	char		*exit_str;
 }	t_pipex;

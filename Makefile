@@ -1,13 +1,17 @@
-################# COMPILATION ###########################
+####################### 🛠️ ##############################
 
 CC =  cc
 CFLAGS = -Wall -Werror -Wextra
 
-################# COMMANDS ##############################
+####################### 🛠️ ##############################
 
 RM = rm -rf
 
-################# FILES #################################
+####################### 🤖 ##############################
+
+NAME = pipex
+
+######################## 📁 #############################
 
 LIBFT = libft.a
 
@@ -26,7 +30,7 @@ LIBC = libc/ft_isalpha.c libc/ft_isdigit.c libc/ft_isalnum.c libc/ft_isascii.c l
 
 LIBFT_OBJS = $(LIBC:.c=.o)
 
-################# FILES #################################
+######################## 📁 #############################
 
 PRINTF = libftprintf.a
 
@@ -38,7 +42,8 @@ PRINTF_SRC =  printf/ft_converse_base.c printf/ft_hexa_base.c printf/size_hexa.c
 
 PRINTF_OBJS = $(PRINTF_SRC:.c=.o)
 
-#########################################################
+######################## 📁 #############################
+
 GNL = get_next_line.a
 
 GNL_DIR = gnl
@@ -46,8 +51,8 @@ GNL_DIR = gnl
 GNL_SRC = gnl/get_next_line_utils.c gnl/get_next_line.c
 
 GNL_OBJS = $(GNL_SRC:.c=.o)
-#########################################################
-NAME = pipex
+
+######################## 📁 #############################
 
 SRC = srcs/main.c srcs/cmd.c srcs/cmd_utils.c srcs/error_system.c srcs/exec.c\
 	srcs/exit.c srcs/fd.c srcs/fd_utils.c srcs/file_error.c srcs/fork.c srcs/pipe_utils.c\
@@ -57,9 +62,19 @@ SRCS = ${SRC} ${LIBC} ${PRINTF_SRC} ${GNL_SRC}
 
 OBJS = $(SRCS:.c=.o)
 
+######################## 📁 #############################
+
+BONUS_SRC = bonus/pipex_bonus.c
+
+BONUS_SRCS = ${BONUS_SRC} ${LIBC} ${PRINTF_SRC} ${GNL_SRC}
+
+OBJS_B = $(BONUS_SRCS:.c=.o)
+
+######################## 🧠 #############################
+
 INCLUDES = -Iincludes -I$(LIBFT_DIR) -I$(PRINTF_DIR) -I$(GNL_DIR)
 
-#########################################################
+######################## 🎨 #############################
 
 BLUE	=	\033[0;34m
 GREEN	=	\033[0;32m
@@ -77,11 +92,31 @@ define HEADER
 ╚═╝     ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝
 endef
 export HEADER
-########################################################
+
+define HEADER_BONUS
+
+██████╗ ██╗██████╗ ███████╗██╗  ██╗    ██████╗  ██████╗ ███╗   ██╗██╗   ██╗███████╗
+██╔══██╗██║██╔══██╗██╔════╝╚██╗██╔╝    ██╔══██╗██╔═══██╗████╗  ██║██║   ██║██╔════╝
+██████╔╝██║██████╔╝█████╗   ╚███╔╝     ██████╔╝██║   ██║██╔██╗ ██║██║   ██║███████╗
+██╔═══╝ ██║██╔═══╝ ██╔══╝   ██╔██╗     ██╔══██╗██║   ██║██║╚██╗██║██║   ██║╚════██║
+██║     ██║██║     ███████╗██╔╝ ██╗    ██████╔╝╚██████╔╝██║ ╚████║╚██████╔╝███████║
+╚═╝     ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝
+
+endef
+export HEADER_BONUS
+
+######################## 🗃️ #############################
+
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-########################################################
-all:  $(LIBFT) $(PRINTF) $(GNL)  $(NAME) header
+
+######################## 🎶🎹 ############################
+
+all:  $(LIBFT) $(PRINTF) $(GNL) $(NAME) header
+
+bonus: $(LIBFT) $(PRINTF) $(GNL) $(OBJS_B) header_bonus
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS_B) $(LIBFT) $(PRINTF) $(GNL) -L. -lft -lftprintf -o $(NAME)
+	@echo "$(RED)$$HEADER_BONUS$(RESET)"
 
 $(LIBFT): $(LIBFT_OBJS)
 		ar rcs $(LIBFT) $(LIBFT_OBJS)
@@ -99,11 +134,11 @@ $(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(GNL)
 	 $(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(PRINTF) $(GNL) -L. -lft -lftprintf -o $(NAME)
 
 clean:
-	$(RM) $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS) $(GNL_OBJS)
+	$(RM) $(OBJS) $(OBJS_B) $(LIBFT_OBJS) $(PRINTF_OBJS) $(GNL_OBJS)
 
 fclean: clean
 	$(RM) $(LIBFT) $(PRINTF) $(GNL) $(NAME)
 
 re: fclean all
 
-.PHONY: all  clean fclean header re
+.PHONY: all  clean fclean bonus header header_bonus re
