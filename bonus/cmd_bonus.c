@@ -1,6 +1,6 @@
 #include "../includes/pipex_bonus.h"
 
-void	cmd(t_pipex *pipex, char *av, char **envp)
+void	cmd(t_pipex_b *pipex, char *av, char **envp)
 {
 	if (pipe(pipex->pipe_fd) == -1)
 	{
@@ -17,7 +17,7 @@ void	cmd(t_pipex *pipex, char *av, char **envp)
 	{
 		close(pipex->pipe_fd[0]);
 		dup2(pipex->pipe_fd[1], 1);
-		execout(pipex, av, env);
+		execout(pipex, av, envp);
 	}
 	else
 	{

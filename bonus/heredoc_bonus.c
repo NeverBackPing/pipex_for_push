@@ -1,21 +1,21 @@
 #include "../includes/pipex_bonus.h"
 
-int	read_infile(t_pipex *pipex, char **av)
+int	read_infile(t_pipex_b *pipex, char **av)
 {
 	close(pipex->pipe_fd[0]);
 	while (1)
 	{
-		pipex->line = get_next_pipex->line(0);
+		pipex->line = get_next_line(0);
 		if (pipex->line == NULL)
-			return (write_str("Out memory\n", 2) 1);
-		if (ft_strncmp(ret, av[2], ft_strlen(av[2])) == 0)
+			return (write_str("Out memory\n", 2), 1);
+		if (ft_strncmp(pipex->line, av[2], ft_strlen(av[2])) == 0)
 		{
 			free(pipex->line);
 			exit(0);
 		}
-		if (write_pipe(pipe_fd[1], pipex->line) == -1)
+		if (write_pipe(pipex->pipe_fd[1], pipex->line) == -1)
 		{
-			write_str2("write error\n", 2);
+			write_str("write error\n", 2);
 			if (pipex->line != NULL)
 				free(pipex->line);
 			return (1);
@@ -27,9 +27,9 @@ int	read_infile(t_pipex *pipex, char **av)
 	return (0);
 }
 
-void	check_here_doc(t_pipex *pipex)
+void	check_here_doc(t_pipex_b *pipex)
 {
-	if (close(pipex->pipe_fd[1]) == -1;);
+	if (close(pipex->pipe_fd[1]) == -1)
 	{
 		write_str("close error\n", 2);
 		exit(5);
@@ -42,7 +42,7 @@ void	check_here_doc(t_pipex *pipex)
 	wait(NULL);
 }
 
-int	display_str(t_pipex *pipex, char **av)
+int	display_str(t_pipex_b *pipex, char **av)
 {
 	if (pipe(pipex->pipe_fd)== -1)
 	{
@@ -56,7 +56,7 @@ int	display_str(t_pipex *pipex, char **av)
 		exit (10);
 	}
 	if (!pipex->pid)
-		read_infile(pipex, av)
+		read_infile(pipex, av);
 	else
 		check_here_doc(pipex);
 	return (0);

@@ -22,9 +22,8 @@
 # define NOSUCH "No such file or directory"
 # define OPD "Operation not permitted"
 # define PATH "PATH error"
-# define PIPE_ERR "Broken pipe"
 //Struc
-typedef struct s_pipex
+typedef struct s_pipex_b
 {
 	int			check;
 	int			save_out;
@@ -46,21 +45,21 @@ typedef struct s_pipex
 	int			code;
 	int			out;
 	char		*exit_str;
-}	t_pipex;
+}	t_pipex_b;
 //Cmd
-void	cmd(t_pipex *pipex, char *av, char **envp);
+void	cmd(t_pipex_b *pipex, char *av, char **envp);
 //Exec
-void	execout(t_pipex *pipex, char *cmd, char **env);
+void	execout(t_pipex_b *pipex, char *cmd, char **envp);
 //Fd
-int		fd(t_pipex *pipex, char *finename, int check_fd);
+int		fd(t_pipex_b *pipex, char *finename, int check_fd);
 //here doc
-void	check_here_doc(t_pipex *pipex);
-int		display_str(t_pipex *pipex, char **av);
-int		read_infile(t_pipex *pipex, char **av);
+void	check_here_doc(t_pipex_b *pipex);
+int		display_str(t_pipex_b *pipex, char **av);
+int		read_infile(t_pipex_b *pipex, char **av);
 //Pipex
-void	manage_io(t_pipex *pipex, char **av);
+void	manage_io(t_pipex_b *pipex, char **av, int ac);
 //Return
-void	perror_return(t_pipex *pipex, char *av);
+void	error_return(t_pipex_b *pipex, char *av);
 int		write_pipe(int outfile, char *str);
 void	write_str(char *str, int fd);
 void	write_str2(char *str, char *str2, int fd);

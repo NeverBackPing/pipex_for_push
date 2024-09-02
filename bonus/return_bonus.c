@@ -18,7 +18,7 @@ void	write_str2(char *str, char *str2, int fd)
 	write(fd, str2, ft_strlen(str2));
 }
 
-void	perror_return(t_pipex *pipex, char *av)
+void	error_return(t_pipex_b *pipex, char *av)
 {
 	if (pipex->out == 1)
 		write_str("Operation not permitted\n", STDERR_FILENO);
