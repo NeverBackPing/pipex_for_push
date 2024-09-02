@@ -4,7 +4,10 @@ int	fork_main(t_pipex *pipex, char **av, char **envp)
 {
 	pipex->child = fork();
 	if (pipex->child < 0)
-		exit(10);
+	{
+		write_str("Resource temporarily unavailable", 2);
+		exit (10);
+	}
 	if (pipex->child == 0)
 	{
 		if (child_fork(pipex, av, envp))
@@ -18,7 +21,10 @@ int	fork_main(t_pipex *pipex, char **av, char **envp)
 	}
 	pipex->child2 = fork();
 	if (pipex->child2 < 0)
-		exit(10);
+	{
+		write_str("Resource temporarily unavailable", 2);
+		exit (10);
+	}
 	if (pipex->child2 == 0)
 	{
 		if (child2_fork(pipex, av, envp))
@@ -43,7 +49,10 @@ int	main(int ac, char **av, char **envp)
 		if (*av[2] == '\0' || *av[3] == '\0')
 			exit(pipex.out);
 		if (pipe(pipex.pipe_fd) < 0)
-			exit (1);
+		{
+			write_str("Broken pipe", 2);
+			exit (32);
+		}
 		file_descriptor(&pipex, av);
 		fork_main(&pipex, av, envp);
 		close_file(&pipex);

@@ -34,6 +34,7 @@
 # define NOSUCH "No such file or directory"
 # define OPD "Operation not permitted"
 # define PATH "PATH error"
+# define PIPE_ERR "Pipe error"
 //Struc
 typedef struct s_pipex
 {
