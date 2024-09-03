@@ -5,7 +5,7 @@ int	read_infile(t_pipex_b *pipex, char **av)
 	close(pipex->pipe_fd[0]);
 	while (1)
 	{
-		pipex->line = get_next_line(STD_FILENO);
+		pipex->line = get_next_line(STDOUT_FILENO);
 		if (ft_strncmp(pipex->line, av[2], ft_strlen(av[2])) == 0)
 		{
 			free(pipex->line);
