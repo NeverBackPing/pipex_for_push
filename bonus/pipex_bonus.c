@@ -15,10 +15,11 @@ int	main(int ac, char **av, char **envp)
 {
 	size_t	i;
 	t_pipex_b	pipex;
+	const int save_fd = dup(STDOUT_FILENO);
 
 	i = 2;
 	if (ac < 5)
-		ft_printf("./pipex infile cmd1 cmd2 oufile\n");
+		return (ft_printf("./pipex infile cmd1 cmd2 oufile\n"), 0);
 	else if (ft_strcmp(av[1], "here_doc") == 0)
 	{
 		if (ac < 6)
@@ -36,4 +37,5 @@ int	main(int ac, char **av, char **envp)
 		cmd(&pipex, av[i++], envp);
 	dup2(pipex.fd[1], STDOUT_FILENO);
 	execout(&pipex, av[i], envp);
+	dup2(STDOUT_FILENO, save_fd);
 }

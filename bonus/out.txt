@@ -1,0 +1,2 @@
+-rwxrwxrwx 1 never never  5859 Sep  4 23:24 Makefile$
+Makefile$
