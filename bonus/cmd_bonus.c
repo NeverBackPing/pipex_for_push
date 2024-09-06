@@ -18,12 +18,12 @@ void	cmd(t_pipex_b *pipex, char *av, char **envp)
 	if (!pipex->pid)
 	{
 		close(pipex->pipe_fd[0]);
-		dup2(pipex->pipe_fd[1], 1);
+		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
 		execout(pipex, av, envp);
 	}
 	else
 	{
 		close(pipex->pipe_fd[1]);
-		dup2(pipex->pipe_fd[0], 0);
+		dup2(pipex->pipe_fd[0], STDIN_FILENO);
 	}
 }

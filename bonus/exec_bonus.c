@@ -55,7 +55,6 @@ int	find_path(t_pipex_b *pipex, char *cmd, char **envp)
 	if ((ft_strchr(cmd, '~') != NULL) && ft_strchr(cmd, '/'))
 		return (write_str2(cmd, ": No such file or directory\n", 2), 1);
 	envp_path(envp, pipex);
-	printf("Path: %s\n", pipex->path_head);
 	pipex->directory = ft_strtok(pipex->path_head, ':');
 	while (pipex->directory != NULL)
 	{
