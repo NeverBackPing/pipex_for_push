@@ -13,6 +13,8 @@ void	manage_here_doc(t_pipex_b *pipex, char **av, int ac)
 	if (pipex->fd[1] == -1)
 	{
 		write_str2(av[ac - 1], ": Permission denied\n",2);
+		close(pipex->fd[0]);
+		close(pipex->fd[1]);
 		exit(13);
 	}
 }
@@ -24,8 +26,11 @@ void	manage_io(t_pipex_b *pipex, char **av, int ac)
 	if (dup2(pipex->fd[0], 0) == -1)
 	{
 		write_str("Input/output error\n", 2);
+		close(pipex->fd[0]);
+		close(pipex->fd[1]);
 		exit(5);
 	}
+	close(pipex->fd[0]);
 	if (pipex->check == 1)
 			pipex->index = ac - 2;
 }
@@ -33,7 +38,6 @@ void	manage_io(t_pipex_b *pipex, char **av, int ac)
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex_b	pipex;
-	const int save_fd = dup(STDOUT_FILENO);
 
 	pipex.index = 2;
 	pipex.check = 0;
@@ -48,7 +52,13 @@ int	main(int ac, char **av, char **envp)
 		while (pipex.index < (size_t)ac - 2)
 			cmd(&pipex, av[pipex.index++], envp);
 	}
-	dup2(pipex.fd[1], STDOUT_FILENO);
+	if (dup2(pipex.fd[1], STDOUT_FILENO) < 0)
+	{
+		perror("dup2");
+		close(pipex.fd[1]);
+		exit(5);
+	}
+	close(pipex.fd[1]);
 	execout(&pipex, av[pipex.index], envp);
-	dup2(STDOUT_FILENO, save_fd);
+	exit(0);
 }

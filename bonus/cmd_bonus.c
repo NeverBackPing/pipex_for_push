@@ -13,17 +13,39 @@ void	cmd(t_pipex_b *pipex, char *av, char **envp)
 	if (pipex->pid == -1)
 	{
 		write_str("Resource temporarily unavailable\n", 2);
+		close(pipex->pipe_fd[0]);
+		close(pipex->pipe_fd[1]);
 		exit (10);
 	}
 	if (!pipex->pid)
 	{
 		close(pipex->pipe_fd[0]);
-		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
+		close(pipex->fd[0]);
+		 if (dup2(pipex->pipe_fd[1], STDOUT_FILENO) == -1)
+		{
+			perror("dup2 stdout");
+			close(pipex->pipe_fd[1]);
+		close(pipex->fd[1]);
+
+			exit(5);
+		}
+		close(pipex->fd[1]);
+		close(pipex->pipe_fd[1]);
 		execout(pipex, av, envp);
+		exit(0);
 	}
 	else
 	{
 		close(pipex->pipe_fd[1]);
-		dup2(pipex->pipe_fd[0], STDIN_FILENO);
+		if (dup2(pipex->pipe_fd[0], STDIN_FILENO) == -1)
+		{
+			perror("dup2 stdout");
+			close(pipex->pipe_fd[0]);
+			close(pipex->fd[0]);
+			exit(5);
+		}
+		close(pipex->pipe_fd[0]);
+		close(pipex->fd[0]);
+		waitpid(pipex->pid, NULL, 0);
 	}
 }

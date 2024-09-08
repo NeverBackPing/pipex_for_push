@@ -1,14 +1,1 @@
-total 232
--rwxrwxrwx 1 never never  5859 Sep  4 23:24 Makefile
--rwxrwxrwx 1 never never 49072 Sep  4 23:24 a.out
-drwxrwxrwx 1 never never  4096 Sep  6 13:19 bonus
--rwxrwxrwx 1 never never  5792 Sep  6 11:13 get_next_line.a
-drwxrwxrwx 1 never never  4096 Sep  6 11:13 gnl
-drwxrwxrwx 1 never never  4096 Sep  4 23:24 includes
-drwxrwxrwx 1 never never  4096 Sep  6 11:12 libc
--rwxrwxrwx 1 never never 84092 Sep  6 11:12 libft.a
--rwxrwxrwx 1 never never 21602 Sep  6 11:13 libftprintf.a
--rwxrwxrwx 1 never never 43864 Sep  6 13:19 pipex
-drwxrwxrwx 1 never never  4096 Sep  6 11:13 printf
-drwxrwxrwx 1 never never  4096 Sep  4 23:24 srcs
--rwxrwxrwx 1 never never 15968 Sep  4 23:24 test
+-rwxrwxrwx 1 never never  5859 Sep  4 23:24 Makefile$

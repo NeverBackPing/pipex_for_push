@@ -82,6 +82,7 @@ void	execout(t_pipex_b *pipex, char *cmd, char **envp)
 	if (execve(pipex->path, tmp_flag, envp) == -1)
 	{
 		clean_split(tmp_flag);
+		close(pipex->fd[1]);
 		exit(0);
 	}
 }
