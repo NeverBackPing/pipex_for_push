@@ -61,7 +61,7 @@ int	first_check_path(t_pipex *pipex)
 	{
 		if (access(pipex->path_find, X_OK) == 0)
 			return (free(pipex->path_find), 0);
-		else
+		else if (access(pipex->path_find, X_OK) != 0)
 			return (denied(pipex), free(pipex->path_find), 1);
 	}
 	return (free(pipex->path_find), 0);

@@ -73,12 +73,38 @@ int	find_path(t_pipex_b *pipex, char *cmd, char **envp)
 	return (write_str2(cmd,": Command not found\n", 2), 1);
 }
 
+int	exec_aout(t_pipex *pipex, char **envp, char **cmd)
+{
+	char	**tmp_flag;
+
+	tmp_flag = ft_split(pipex->cmd, ' ');
+	if (tmp_flag == NULL)
+		return (1);
+	if (pipex->cmd[0] == '.' && pipex->cmd[1] == '/')
+	{
+		if (execve(pipex->cmd, pipex->flag, envp) == -1)
+			return (1);
+		else
+			return (free(pipex->flag), 0);
+	}
+	return (1);
+}
+
 void	execout(t_pipex_b *pipex, char *cmd, char **envp)
 {
 	char	**tmp_flag;
 
+	if (cmd[0] == '.' && cmd[1] == '/')
+	{
+		exec_aout(pipex, envp, cmd);
+		return ;
+	}
 	tmp_flag = ft_split(cmd, ' ');
-	find_path(pipex, tmp_flag[0], envp);
+	if (find_path(pipex, tmp_flag[0], envp))
+	{
+		clean_split(tmp_flag);
+		return ;
+	}
 	if (execve(pipex->path, tmp_flag, envp) == -1)
 	{
 		clean_split(tmp_flag);
