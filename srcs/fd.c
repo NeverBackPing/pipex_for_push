@@ -54,7 +54,11 @@ int	check_fd(t_pipex *pipex, char **str)
 		return (1);
 	pipex->fd[0] = open(pipex->infile, O_RDONLY, 0777);
 	if (pipex->fd[0] == -1)
+	{
+		if (access(pipex->infile, F_OK | R_OK) != 0)
+			return (error_file_denied(pipex->infile, pipex), 1);
 		error_file(pipex->infile);
+	}
 	pipex->fd[1] = open(pipex->outfile, O_WRONLY | O_TRUNC, 0777);
 	if (fd_outfile(pipex))
 		return (1);
@@ -72,9 +76,15 @@ int	check_fd(t_pipex *pipex, char **str)
 
 void	file_descriptor(t_pipex *pipex, char **av)
 {
+	pipex->fd[0] = 0;
+	pipex->fd[1] = 0;
 	if (check_fd(pipex, av))
 	{
 		close_fd(pipex);
+		if (pipex->infile != NULL)
+			free(pipex->infile);
+		if (pipex->outfile != NULL)
+			free(pipex->outfile);
 		exit_out(pipex);
 		exit(pipex->out);
 	}

@@ -71,7 +71,8 @@ int	find_path(t_pipex *pipex)
 {
 	char	*tmp_dir;
 
-	if ((ft_strchr(pipex->cmd, '~') != NULL) && (clean_path(pipex)))
+	if (((ft_strchr(pipex->cmd, '~') != NULL) && (clean_path(pipex))) ||
+		(pipex->cmd[0] == '/') )
 		return (print_error(pipex), 1);
 	if (first_check_path(pipex))
 		return (1);
