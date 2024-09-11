@@ -12,32 +12,33 @@
 
 #include "../includes/pipex.h"
 
-int	clean_path(t_pipex *pipex)
+int	clean_path(t_pipex *pipex, char *av)
 {
-	char	**cmd_tmp;
+	char	**cmd;
 	char	*tmp;
 
-	if (((pipex->cmd[0] != '~') || pipex->cmd[1] == '/') || nb_wave(pipex) > 1)
+	if (ft_strchr(pipex->tmp[0], '~') == NULL)
+		return (0);
+	if (nb_wave(pipex) > 1)
+		return (print_error(pipex), clean_split(pipex->tmp), 1);
+	clean_split(pipex->tmp);
+	pipex->tmp = ft_split(av, ' ');
+	if (pipex->tmp == NULL)
+		return (clean_split(pipex->tmp), ouf_memory(pipex), 1);
+	if (pipex->tmp[0][0] == '~' && pipex->tmp[0][1] == '/')
 		return (1);
-	cmd_tmp = ft_split(pipex->cmd, '~');
-	if (cmd_tmp == NULL)
-		return (1);
-	free(pipex->cmd);
-	tmp = ft_strdup(cmd_tmp[0]);
+	cmd = ft_split(pipex->tmp[0], '~');
+	if (cmd == NULL)
+		return (clean_split(pipex->tmp), ouf_memory(pipex), 1);
+	clean_split(pipex->tmp);
+	tmp = ft_strjoin("/", cmd[0]);
 	if (tmp == NULL)
-		return (clean_split(cmd_tmp), 1);
-	pipex->cmd = ft_strjoin("/", tmp);
-	if (pipex->cmd == NULL)
-		return (clean_split(cmd_tmp), free(tmp), 1);
-	if (access(pipex->cmd, F_OK) == 0)
-	{
-		clean_split(cmd_tmp);
-		if (access(pipex->cmd, X_OK) == 0)
-			return (free(tmp), 0);
-		else
-			return (free(tmp), denied(pipex), 1);
-	}
-	return (clean_split(cmd_tmp), free(tmp), 0);
+		return (clean_split(cmd), ouf_memory(pipex), 1);
+	pipex->tmp = ft_split(tmp, ' ');
+	free(tmp);
+	if (pipex->tmp == NULL)
+		return (clean_split(pipex->tmp), clean_split(cmd), ouf_memory(pipex), 1);
+	return (clean_split(cmd), 0);
 }
 
 int	access_path(t_pipex *pipex)
@@ -54,13 +55,17 @@ int	access_path(t_pipex *pipex)
 
 int	first_check_path(t_pipex *pipex)
 {
+	pipex->check_aout = 0;
 	pipex->path_find = ft_strdup(pipex->cmd);
 	if (pipex->path_find == NULL)
 		return (1);
 	if (access(pipex->path_find, F_OK) == 0)
 	{
 		if (access(pipex->path_find, X_OK) == 0)
+		{
+			pipex->check_aout = 2;
 			return (free(pipex->path_find), 0);
+		}
 		else if (access(pipex->path_find, X_OK) != 0)
 			return (denied(pipex), free(pipex->path_find), 1);
 	}
@@ -71,11 +76,10 @@ int	find_path(t_pipex *pipex)
 {
 	char	*tmp_dir;
 
-	if (((ft_strchr(pipex->cmd, '~') != NULL) && (clean_path(pipex))) ||
-		(pipex->cmd[0] == '/') )
-		return (print_error(pipex), 1);
 	if (first_check_path(pipex))
 		return (1);
+	else if (pipex->check_aout == 2)
+		return (0);
 	pipex->directory = ft_strtok(pipex->path_head, ':');
 	while (pipex->directory != NULL)
 	{
@@ -102,7 +106,12 @@ int	check_path(t_pipex *pipex, char *av, char **envp)
 	pipex->tmp = ft_split(av, ' ');
 	if (pipex->tmp == NULL)
 		return (clean_split(pipex->tmp), ouf_memory(pipex), 1);
-	pipex->cmd = ft_strdup(pipex->tmp[0]);
+	if (clean_path(pipex, av))
+			return (1);
+	if ((pipex->tmp[0][0] == '/' && access(pipex->tmp[0], F_OK) == 0))
+		pipex->cmd = ft_strdup((pipex->tmp[0] + find_cmd(pipex)));
+	else
+		pipex->cmd = ft_strdup(pipex->tmp[0]);
 	if (pipex->cmd == NULL)
 		return (clean_split(pipex->tmp), ouf_memory(pipex), 1);
 	if (((pipex->cmd[0] == '.') && (pipex->cmd[1] == '/'))

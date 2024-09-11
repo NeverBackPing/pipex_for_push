@@ -20,9 +20,13 @@ int	exec_aout(t_pipex *pipex, char **envp)
 	if (pipex->cmd[0] == '.' && pipex->cmd[1] == '/')
 	{
 		if (execve(pipex->cmd, pipex->flag, envp) == -1)
+		{
+			clean_split(pipex->flag);
+			free(pipex->cmd);
 			return (1);
+		}
 		else
-			return (free(pipex->flag), 0);
+			return (clean_split(pipex->flag), free(pipex->cmd), 0);
 	}
 	return (1);
 }

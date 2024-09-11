@@ -39,6 +39,7 @@
 typedef struct s_pipex
 {
 	int			check;
+	int			check_aout;
 	int			save_out;
 	int			status;
 	int			status2;
@@ -100,6 +101,7 @@ int		child2_fork(t_pipex *pipex, char **av, char **envp);
 //Main
 int		fork_main(t_pipex *pipex, char **av, char **envp);
 //Pipe utile
+int		find_cmd(t_pipex *pipex);
 void	perror_return(t_pipex *pipex, char *av);
 int		write_pipe(int outfile, char *str);
 void	write_str(char *str, int fd);

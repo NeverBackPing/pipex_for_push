@@ -1,1 +1,14 @@
-je suis une macro
+Makefile$
+a.out$
+bonus$
+bonusout.txt$
+get_next_line.a$
+gnl$
+includes$
+libc$
+libft.a$
+libftprintf.a$
+pipex$
+printf$
+srcs$
+test$

@@ -68,9 +68,9 @@ int	nb_wave(t_pipex *pipex)
 
 	i = 0;
 	len = 0;
-	while (pipex->cmd[i] != '\0')
+	while (pipex->tmp[0][i] != '\0')
 	{
-		if (pipex->cmd[i] == '~')
+		if (pipex->tmp[0][i] == '~')
 			len++;
 		i++;
 	}

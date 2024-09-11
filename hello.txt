@@ -1,0 +1,6 @@
+LEAK SUMMARY:
+==5839==    definitely lost: 0 bytes in 0 blocks
+==5839==    indirectly lost: 0 bytes in 0 blocks
+==5839==      possibly lost: 0 bytes in 0 blocks
+==5839==    still reachable: 17 bytes in 2 blocks
+==5839==         suppressed: 0 bytes in 0 blocks

@@ -1,6 +1,23 @@
 
 #include "../includes/pipex.h"
 
+int	find_cmd(t_pipex *pipex)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (pipex->tmp[0][i] != '\0')
+	{
+		if (pipex->tmp[0][i] == '/')
+			count = i;
+		i++;
+	}
+	count = count + 1;
+	return (count);
+}
+
 int	write_pipe(int outfile, char *str)
 {
 	if (write(outfile, str, ft_strlen(str)) == -1)
