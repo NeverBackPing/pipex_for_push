@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_bonus.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sjossain <sjossain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/11 16:13:41 by sjossain          #+#    #+#             */
+/*   Updated: 2024/09/11 16:13:41 by sjossain         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/pipex_bonus.h"
 
 void	clean_split(char **array)
@@ -73,21 +85,18 @@ int	find_path(t_pipex_b *pipex, char *cmd, char **envp)
 	return (write_str2(cmd,": Command not found\n", 2), 1);
 }
 
-int	exec_aout(t_pipex *pipex, char **envp, char **cmd)
+void	exec_aout(char **envp, char *cmd)
 {
 	char	**tmp_flag;
 
-	tmp_flag = ft_split(pipex->cmd, ' ');
+	tmp_flag = ft_split(cmd, ' ');
 	if (tmp_flag == NULL)
-		return (1);
-	if (pipex->cmd[0] == '.' && pipex->cmd[1] == '/')
+		return ;
+	if (cmd[0] == '.' && cmd[1] == '/')
 	{
-		if (execve(pipex->cmd, pipex->flag, envp) == -1)
-			return (1);
-		else
-			return (free(pipex->flag), 0);
+		if (execve(cmd, tmp_flag, envp) == -1)
+			clean_split(tmp_flag);
 	}
-	return (1);
 }
 
 void	execout(t_pipex_b *pipex, char *cmd, char **envp)
@@ -96,7 +105,7 @@ void	execout(t_pipex_b *pipex, char *cmd, char **envp)
 
 	if (cmd[0] == '.' && cmd[1] == '/')
 	{
-		exec_aout(pipex, envp, cmd);
+		exec_aout(envp, cmd);
 		return ;
 	}
 	tmp_flag = ft_split(cmd, ' ');
