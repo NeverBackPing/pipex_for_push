@@ -116,7 +116,10 @@ int	check_path(t_pipex *pipex, char *av, char **envp)
 		return (clean_split(pipex->tmp), ouf_memory(pipex), 1);
 	if (((pipex->cmd[0] == '.') && (pipex->cmd[1] == '/'))
 			&& access(pipex->cmd, F_OK) != 0)
-		return (print_error(pipex), clean_split(pipex->tmp), free(pipex->cmd), 1);
+	{
+		pipex->check_aout = 4;
+		return (/*print_error(pipex),*/ clean_split(pipex->tmp), free(pipex->cmd), 1);
+	}
 	if (path_envp(envp, pipex))
 		return (error_path(pipex), clean_split(pipex->tmp), 1);
 	if (find_path(pipex))

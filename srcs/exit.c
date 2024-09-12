@@ -15,6 +15,8 @@
 void	exit_out(t_pipex *pipex)
 {
 	pipex->out = 0;
+	if (pipex->check_aout == 4)
+		return ;
 	if (pipex->exit_str != NULL)
 	{
 		if (ft_strncmp(pipex->exit_str, OPD, ft_strlen(OPD)) == 0)

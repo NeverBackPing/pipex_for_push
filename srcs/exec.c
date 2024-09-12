@@ -19,8 +19,13 @@ int	exec_aout(t_pipex *pipex, char **envp)
 		return (1);
 	if (pipex->cmd[0] == '.' && pipex->cmd[1] == '/')
 	{
+		if (access((pipex->cmd + 2), F_OK) < 0)
+		{
+			printf("cmd: %s\n", (pipex->cmd + 2));
+		}
 		if (execve(pipex->cmd, pipex->flag, envp) == -1)
 		{
+			/* pipex->exit_str = ft_strdup(NOSUCH);*/
 			clean_split(pipex->flag);
 			free(pipex->cmd);
 			return (1);
@@ -28,7 +33,7 @@ int	exec_aout(t_pipex *pipex, char **envp)
 		else
 			return (clean_split(pipex->flag), free(pipex->cmd), 0);
 	}
-	return (1);
+	return (0);
 }
 
 int	exec_alloc(t_pipex *pipex, char **tmp_flag)
