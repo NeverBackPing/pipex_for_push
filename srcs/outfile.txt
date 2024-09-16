@@ -1,0 +1,14 @@
+bonus
+get_next_line.a
+gnl
+includes
+infile
+libc
+libft.a
+libftprintf.a
+Makefile
+outfile.txt
+pipex
+printf
+srcs
+test

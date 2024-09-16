@@ -15,9 +15,7 @@
 void	exit_out(t_pipex *pipex)
 {
 	pipex->out = 0;
-	if (pipex->check_aout == 4)
-		return ;
-	if (pipex->exit_str != NULL)
+	if (pipex->exit_str != NULL && ft_strcmp(pipex->exit_str, OFM) != 0)
 	{
 		if (ft_strncmp(pipex->exit_str, OPD, ft_strlen(OPD)) == 0)
 			pipex->out = 1;
@@ -33,7 +31,6 @@ void	exit_out(t_pipex *pipex)
 			pipex->out = 127;
 		if (pipex->exit_str != NULL)
 			free(pipex->exit_str);
-
 	}
 	else if (pipex->exit_str == NULL || ft_strcmp(pipex->exit_str, OFM) == 0)
 		pipex->out = 12;

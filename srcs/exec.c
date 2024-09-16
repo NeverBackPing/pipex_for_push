@@ -19,14 +19,11 @@ int	exec_aout(t_pipex *pipex, char **envp)
 		return (1);
 	if (pipex->cmd[0] == '.' && pipex->cmd[1] == '/')
 	{
-		if (access((pipex->cmd + 2), F_OK) < 0)
-		{
-			printf("cmd: %s\n", (pipex->cmd + 2));
-		}
 		if (execve(pipex->cmd, pipex->flag, envp) == -1)
 		{
-			/* pipex->exit_str = ft_strdup(NOSUCH);*/
+			str_error(pipex, pipex->cmd);
 			clean_split(pipex->flag);
+			free(pipex->path_find);
 			free(pipex->cmd);
 			return (1);
 		}
@@ -49,10 +46,11 @@ int	exec_alloc(t_pipex *pipex, char **tmp_flag)
 
 int	exec_cmd(t_pipex *pipex, char *av, char **envp)
 {
-	int		i;
-	char	**tmp_flag;
+	size_t		i;
+	char		**tmp_flag;
 
 	i = 1;
+	pipex->out = 0;
 	if (pipex->cmd[0] == '.' && pipex->cmd[1] == '/')
 	{
 		if (exec_aout(pipex, envp) == 0)
@@ -63,7 +61,7 @@ int	exec_cmd(t_pipex *pipex, char *av, char **envp)
 	tmp_flag = ft_split(av, ' ');
 	if (tmp_flag == NULL || exec_alloc(pipex, tmp_flag))
 		return (1);
-	while ((size_t)i < count_arg(tmp_flag) && tmp_flag[i] != NULL)
+	while (i < count_arg(tmp_flag) && tmp_flag[i] != NULL)
 	{
 		pipex->flag[i] = ft_strdup(tmp_flag[i]);
 		if (pipex->flag[i - 1] == NULL)
@@ -72,6 +70,11 @@ int	exec_cmd(t_pipex *pipex, char *av, char **envp)
 	}
 	pipex->flag[i] = NULL;
 	if (execve(pipex->path_find, pipex->flag, envp) == -1)
+	{
+		str_error(pipex, pipex->cmd);
+		free(pipex->path_find);
+		free(pipex->cmd);
 		return (clean_split(pipex->flag), clean_split(tmp_flag), 1);
+	}
 	return (0);
 }

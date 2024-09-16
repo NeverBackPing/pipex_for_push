@@ -61,6 +61,7 @@ typedef struct s_pipex
 	char		*exit_str;
 }	t_pipex;
 //CMD
+int		clean_path(t_pipex *pipex, char *av);
 int		check_path(t_pipex *pipex, char *av, char **envp);
 //CMD utile
 void	clean_split(char **array);
@@ -74,6 +75,7 @@ int		nb_wave(t_pipex *pipex);
 void	path_clean(t_pipex *pipex, char *tmp_dir);
 int		path_envp(char **envp, t_pipex *pipex);
 //Error system
+void	str_error(t_pipex *pipex, char *str);
 void	exit_error(t_pipex *pipex, char **av);
 void	exit_error2(t_pipex *pipex, char **av);
 void	system_err(t_pipex *pipex, const char *str);

@@ -12,6 +12,20 @@
 
 #include "../includes/pipex.h"
 
+void	str_error(t_pipex *pipex, char *str)
+{
+	if (ft_strchr(str, '/') != NULL)
+	{
+		pipex->exit_str = ft_strdup(NOSUCH);
+	}
+	else if (ft_strchr(str, '~') != NULL)
+	{
+		pipex->exit_str = ft_strdup(NOSUCH);
+	}
+	else
+		pipex->exit_str = ft_strdup(CND);
+
+}
 
 void	exit_error(t_pipex *pipex, char **av)
 {

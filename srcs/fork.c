@@ -32,7 +32,7 @@ int	manage_child(t_pipex *pipex, char *av, char **envp)
 	close(pipex->pipe_fd[0]);
 	if (pipex->check == 0)
 	{
-		if (exec_cmd(pipex, av, envp) == -1)
+		if (exec_cmd(pipex, av, envp) == 1)
 		{
 			close_fd(pipex);
 			return (exit_out(pipex),1);
@@ -82,7 +82,7 @@ int	manage_child2(t_pipex *pipex, char *av, char **envp)
 		return (exit_out(pipex), 1);
 	}
 	close(pipex->pipe_fd[1]);
-	if (exec_cmd(pipex, av, envp) == -1)
+	if (exec_cmd(pipex, av, envp) == 1)
 	{
 		close_fd(pipex);
 		exit_out(pipex);
